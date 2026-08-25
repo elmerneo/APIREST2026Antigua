@@ -39,6 +39,7 @@ db.sequelize = sequelize;
 // Le pasamos la instancia de conexión `sequelize` y la clase `Sequelize` como argumentos
 db.clientes = require("./cliente.model.js")(sequelize, Sequelize);
 db.productos = require("./producto.model.js")(sequelize, Sequelize);
+db.proveedores = require("./proveedor.model.js")(sequelize, Sequelize);
 
 // Ejemplo: db.productos = require("./producto.model.js")(sequelize, Sequelize);
 
