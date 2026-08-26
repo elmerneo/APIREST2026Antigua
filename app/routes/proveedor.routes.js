@@ -3,7 +3,7 @@ module.exports = (app) => {
     const router = require("express").Router();
 
     // Crear un nuevo Proveedor
-    router.post("/", proveedores.create);
+    router.post("/create/", proveedores.create);
 
     // Obtener todos los Proveedores
     router.get("/", proveedores.findAll);
