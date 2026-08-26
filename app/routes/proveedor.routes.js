@@ -1,15 +1,22 @@
-module.exports = app => {
-const express = require('express');
-const router = express.Router();
-const proveedorController = require('../controllers/proveedor.controller');
+module.exports = (app) => {
+    const proveedores = require("../controllers/proveedor.controller.js");
+    const router = require("express").Router();
 
-router.get('/', proveedorController.findAll);
-router.get('/:id', proveedorController.findOne);
-router.post('/create/', proveedorController.create);
-router.put('/update/:id', proveedorController.update);
-router.delete('/delete/:id', proveedorController.delete);
+    // Crear un nuevo Proveedor
+    router.post("/", proveedores.create);
 
-app.use('/api/proveedores', router);
+    // Obtener todos los Proveedores
+    router.get("/", proveedores.findAll);
+
+    // Obtener un solo Proveedor por ID
+    router.get("/:id", proveedores.findOne);
+
+    // Actualizar un Proveedor por ID
+    router.put("/:id", proveedores.update);
+
+    // Eliminar un Proveedor por ID
+    router.delete("/:id", proveedores.delete);
+
+    // Prefijo de la API
+    app.use("/api/proveedores", router);
 };
-    
-
