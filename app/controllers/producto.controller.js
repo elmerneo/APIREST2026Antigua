@@ -1,11 +1,10 @@
-// importamos db los modelos en este caso si tenemos uno o mas, se puede referenciar db."nombreModelo".   
 const db = require("../models");
-const Producto = db.producto;
+const Producto = db.productos; // ✅ Coincide con db.productos exportado en index.js
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Product
 exports.create = (req, res) => {
-    // Validamos que dentro del  request no venga vacio el nombre, de lo contrario returna error
+    // Validamos que el cuerpo de la petición contenga el nombre
     if (!req.body.nombre) {
         res.status(400).send({
             message: "Content can not be empty!"
@@ -13,18 +12,17 @@ exports.create = (req, res) => {
         return;
     }
 
-    // Create a Product, definiendo una variable con la estructura del reques para luego solo ser enviada como parametro mas adelante. 
+    // Creamos el objeto del producto a insertar
     const producto = {
         nombre: req.body.nombre,
         precio: req.body.precio,
         costo: req.body.costo,
         stock: req.body.stock,
         ingreso: req.body.ingreso,
-        // utilizando ? nos ayuda a indicar que el paramatro puede ser opcional dado que si no viene, le podemos asignar un valor default
         status: req.body.status ? req.body.status : false
     };
 
-    // Save a new Product into the database
+    // Guardamos en la base de datos
     Producto.create(producto)
         .then(data => {
             res.send(data);
@@ -37,7 +35,7 @@ exports.create = (req, res) => {
         });
 };
 
-// Retrieve all Product from the database.
+// Retrieve all Products from the database.
 exports.findAll = (req, res) => {
     const nombre = req.query.nombre;
     var condition = nombre ? { nombre: { [Op.iLike]: `%${nombre}%` } } : null;
@@ -54,13 +52,19 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Find a single Tutorial with an id
+// Find a single Product with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
     Producto.findByPk(id)
         .then(data => {
-            res.send(data);
+            if (data) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Producto with id=${id}.`
+                });
+            }
         })
         .catch(err => {
             res.status(500).send({
@@ -69,7 +73,7 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Product by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 
@@ -97,7 +101,7 @@ exports.update = (req, res) => {
 // Delete a Product with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
-    // utilizamos el metodo destroy para eliminar el objeto mandamos la condicionante where id = parametro que recibimos 
+
     Producto.destroy({
         where: { id: id }
     })
@@ -114,7 +118,7 @@ exports.delete = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Tutorial with id=" + id
+                message: "Could not delete Producto with id=" + id
             });
         });
 };
@@ -136,7 +140,7 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-// find all active Product, basado en el atributo status vamos a buscar que solo los productos activos
+// Find all active Products (status = true)
 exports.findAllStatus = (req, res) => {
     Producto.findAll({ where: { status: true } })
         .then(data => {
@@ -145,7 +149,7 @@ exports.findAllStatus = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving Product."
+                    err.message || "Some error occurred while retrieving Products."
             });
         }); 
 };

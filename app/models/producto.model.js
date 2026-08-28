@@ -1,5 +1,5 @@
-module.exports =(sequelize, Sequelize) => {
-    const Producto= sequelize.define("producto", {
+module.exports = (sequelize, Sequelize) => {
+    const Producto = sequelize.define("producto", {
         nombre: {
             type: Sequelize.STRING
         },
@@ -12,7 +12,7 @@ module.exports =(sequelize, Sequelize) => {
         stock: {
             type: Sequelize.INTEGER
         },
-        ingreso:{
+        ingreso: {
             type: Sequelize.DATE
         },
         status: {
@@ -21,7 +21,4 @@ module.exports =(sequelize, Sequelize) => {
     });
 
     return Producto;
-
-
-
-}
+};
