@@ -75,7 +75,7 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
     Prestamo.update(req.body, {
-        where: { idprestamo: id }
+        where: { id: id }
     })
         .then(num => {
             if (num == 1) {
@@ -100,7 +100,7 @@ exports.delete = (req, res) => {
     const id = req.params.id;
 
     Prestamo.destroy({
-        where: { idprestamo: id }
+        where: { id: id }
     })
         .then(num => {
             if (num == 1) {
