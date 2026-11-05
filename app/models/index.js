@@ -28,6 +28,6 @@ db.clientes = require("./cliente.model.js")(sequelize, Sequelize);
 db.productos = require("./producto.model.js")(sequelize, Sequelize);
 db.proveedores = require("./proveedor.model.js")(sequelize, Sequelize);
 db.prestamos = require("./prestamo.model.js")(sequelize, Sequelize);
-
+db.pagos = require("./pago.model.js")(sequelize, Sequelize); // <-- NUEVO
 
 module.exports = db;
