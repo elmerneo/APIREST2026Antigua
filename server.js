@@ -34,7 +34,7 @@ require("./app/routes/cliente.routes")(app);
 require("./app/routes/producto.routes")(app);
 require("./app/routes/proveedor.routes")(app);
 require("./app/routes/prestamo.routes")(app);
-
+require("./app/routes/pago.routes.js")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
